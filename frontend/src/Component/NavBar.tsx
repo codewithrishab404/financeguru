@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import photo from '/assets/photo.png';
+import photo from "/assets/photo.png";
 
 export default function Navbar() {
   return (
@@ -7,10 +7,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-            <div className="flex-shrink-0 flex items-center">
-              <img className="h-32 w-auto" src={photo} alt="Logo" />
-              <span className="ml-2 font-bold text-white text-xl">Finance Guruji</span>
-            </div>
+          <div className="flex-shrink-0 flex items-center">
+            <img className="h-32 w-auto" src={photo} alt="Logo" />
+            <span className="ml-2 font-bold text-white text-xl">
+              Finance Guruji
+            </span>
+          </div>
 
           {/* Links */}
           <div className="hidden md:flex space-x-8">

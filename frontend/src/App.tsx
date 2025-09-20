@@ -4,6 +4,7 @@ import LoginPage from "./Pages/LoginPage"; // create this component
 import Home from "./Pages/Home";
 import RegisterPage from "./Pages/RegisterPage";
 import UserForm from "./Pages/UserForm";
+import About from "./Pages/About";
 // move your current ChatGuru content here
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/userform" element={<UserForm />} />
+      <Route path="/about" element={<About />} />
     </Routes>
   );
 }
