@@ -1,16 +1,45 @@
 import { Link } from "react-router-dom";
 import photo from '/assets/photo.png';
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("idToken");
+
+    async function verifyToken() {
+      if (token) {
+        const response = await fetch('http://localhost:5000/protected', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+          },
+        });
+        const data = await response.json();
+        if (data.valid) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } else {
+        setIsLoggedIn(false);
+      }
+    }
+
+    verifyToken();
+  }, [])
+
   return (
     <nav className="sticky top-0 z-50 bg-white/30 backdrop-blur-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-            <div className="flex-shrink-0 flex items-center">
-              <img className="h-32 w-auto" src={photo} alt="Logo" />
-              <span className="ml-2 font-bold text-white text-xl">Finance Guruji</span>
-            </div>
+          <div className="flex-shrink-0 flex items-center">
+            <img className="h-32 w-auto" src={photo} alt="Logo" />
+            <span className="ml-2 font-bold text-white text-xl">Finance Guruji</span>
+          </div>
 
           {/* Links */}
           <div className="hidden md:flex space-x-8">
@@ -38,22 +67,32 @@ export default function Navbar() {
           </div>
 
           {/* Login/Register */}
-          <div className="flex items-center space-x-4 border-10%">
+          {isLoggedIn ?
             <Link
-              to="/login"
+              to="/userform"
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
             >
-              Login
+              Fill up form for better answers
             </Link>
-            <Link
-              to="/register"
-              className="px-4 py-2 border border-blue-700 text-blue-700 rounded hover:bg-blue-50 transition"
-            >
-              Register
-            </Link>
-          </div>
+            :
+            (
+              <div className="flex items-center space-x-4 border-10%">
+                <Link
+                  to="/login"
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-2 border border-blue-700 text-blue-700 rounded hover:bg-blue-50 transition"
+                >
+                  Register
+                </Link>
+              </div>
+            )}
         </div>
-      </div>
-    </nav>
+      </div >
+    </nav >
   );
 }

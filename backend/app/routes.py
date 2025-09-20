@@ -23,7 +23,7 @@ def register():
 def protected():
     user = request.user
     print(user)
-    return jsonify({"message": "Access granted", "user": user})
+    return jsonify({"message": "Access granted", "user": user, "valid": True})
 
 # handle user data in database
 @main.route("/user-data", methods=["POST", "GET", "PUT"])
@@ -40,6 +40,7 @@ def user_data():
 
     elif request.method == "GET":
         profile = firebase_service.get_user_profile(user_id)
+        print(profile)
         if profile:
             return jsonify(profile)
         return jsonify({"error": "No profile found"}), 404
