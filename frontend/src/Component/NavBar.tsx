@@ -25,12 +25,7 @@ export default function Navbar() {
             >
               About
             </Link>
-            <Link
-              to="/services"
-              className="text-white hover:text-blue-300 font-medium"
-            >
-              Services
-            </Link>
+
             <Link
               to="/contact"
               className="text-white hover:text-blue-300 font-medium"
