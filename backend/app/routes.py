@@ -34,8 +34,9 @@ def user_data():
 
     if request.method == "POST":
         data = request.json
-        firebase_service.save_user_profile(user, data, overwrite=True)
-        return jsonify({"message": "Profile saved successfully"})
+        firebase_service.save_user_profile(user_id, data, overwrite=True)
+        user_data = firebase_service.get_user_profile(user_id)
+        return jsonify({"message": "Profile saved successfully", "data": user_data})
 
     elif request.method == "GET":
         profile = firebase_service.get_user_profile(user_id)
@@ -45,5 +46,6 @@ def user_data():
 
     elif request.method == "PUT":
         data = request.json
-        firebase_service.save_user_profile(user, data, overwrite=False)
-        return jsonify({"message": "Profile updated successfully"})
+        firebase_service.save_user_profile(user_id, data, overwrite=False)
+        user_data = firebase_service.get_user_profile(user_id)
+        return jsonify({"message": "Profile updated successfully", "data": user_data})
