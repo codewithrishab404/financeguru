@@ -1,5 +1,5 @@
 // geminiClient.ts
-import { GoogleGenAI, createUserContent } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 
 export const ai = new GoogleGenAI({
     apiKey: import.meta.env.VITE_GEMINI_API_KEY as string,
@@ -10,43 +10,60 @@ export async function pdfToInlineData(file: File) {
     const arrayBuffer = await file.arrayBuffer();
     return {
         inlineData: {
-            mimeType: file.type || "application/pdf",
+            mimeType: "application/pdf",
             data: btoa(String.fromCharCode(...new Uint8Array(arrayBuffer))),
         },
     };
 }
 
-// Ask Gemini with optional PDF + user data + chat history + search tool
-export async function askGemini(
-    question: string,
-    pdfDoc: { inlineData: { mimeType: string; data: string } } | null,
-    userData: Record<string, any>,
-    history: { role: "user" | "model"; text: string }[]
-) {
+export async function askGemini(question: string, pdfDoc: File | null, userData: Record<string, any>) {
+    // Define system prompt
+    const systemPrompt = `You are a financial assistant. Extract savings and spending data from the PDF and return JSON. Here is the user data that we already have ${userData}`;
+
     const contents: any[] = [
-        { text: `User Data: ${JSON.stringify(userData)}` },
-        ...(pdfDoc ? [pdfDoc] : []),
+        { text: systemPrompt },
         { text: question },
-    ];
-
-    const groundingTool = {
-        googleSearch: {},
+    ]
+    if (pdfDoc) {
+        const arrayBuffer = await pdfDoc.arrayBuffer();
+        const pdfInline = {
+            inlineData: {
+                mimeType: "application/pdf",
+                data: btoa(String.fromCharCode(...new Uint8Array(arrayBuffer))),
+            },
+        };
+        contents.push(pdfInline);
     }
 
-    const toolConfig = {
-        tools: [groundingTool]
-    }
-
-    const systemPrompt = { text: "You are a financial advisor. Use the PDF data and user data to answer clearly and accurately." };
-
+    // Chat-style request
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: [
-            ...history.map((h) => ({ role: h.role, parts: [{ text: h.text }] })),
-            { role: "user", parts: contents },
-        ],
-        config: toolConfig,
+        contents,
+        // Request structured output (JSON)
+        // config: {
+        //     responseMimeType: "application/json",
+        //     responseSchema: {
+        //         type: Type.OBJECT,
+        //         properties: {
+        //             totalSavings: { type: Type.NUMBER },
+        //             totalSpending: { type: Type.NUMBER },
+        //             categories: {
+        //                 type: Type.ARRAY,
+        //                 items: {
+        //                     type: Type.OBJECT,
+        //                     properties: {
+        //                         category: { type: Type.STRING },
+        //                         amount: { type: Type.NUMBER },
+        //                     },
+        //                     required: ["category", "amount"],
+        //                 },
+        //             },
+        //         },
+        //         required: ["totalSavings", "totalSpending", "categories"],
+        //     },
+        // },
     });
 
-    return response.text;
+    console.log("Structured Output:", response.data);
+    return response;
 }
