@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import photo from '/assets/photo.png';
 import { useEffect, useState } from "react";
+=======
+import photo from "/assets/photo.png";
+>>>>>>> aba7956ed85898733a31c61692864c3b25707ca3
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
@@ -38,7 +42,13 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <img className="h-32 w-auto" src={photo} alt="Logo" />
+<<<<<<< HEAD
             <span className="ml-2 font-bold text-white text-xl">Finance Guruji</span>
+=======
+            <span className="ml-2 font-bold text-white text-xl">
+              Finance Guruji
+            </span>
+>>>>>>> aba7956ed85898733a31c61692864c3b25707ca3
           </div>
 
           {/* Links */}
