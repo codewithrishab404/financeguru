@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+import AIChat from './pages/AIChat'
+import './App.css'
+
+function App() {
+  return (
+    <>
+      <div>
+        <AIChat />
+      </div>
+    </>
+  )
+=======
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./Pages/LoginPage"; // create this component
@@ -17,4 +30,5 @@ export default function App() {
       <Route path="/about" element={<About />} />
     </Routes>
   );
+>>>>>>> b05ca118a0321e03392198513c104bb56e13ca34
 }
