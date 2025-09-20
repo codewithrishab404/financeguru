@@ -13,7 +13,8 @@ export default function Home() {
     const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // <-- initialize navigate here
+
   const handleClick = () => {
     navigate("/chat");
     console.log("Finance Chat button clicked!");

@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import photo from '/assets/photo.png';
 import { useEffect, useState } from "react";
-=======
-import photo from "/assets/photo.png";
->>>>>>> aba7956ed85898733a31c61692864c3b25707ca3
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
@@ -42,17 +38,13 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <img className="h-32 w-auto" src={photo} alt="Logo" />
-<<<<<<< HEAD
-            <span className="ml-2 font-bold text-white text-xl">Finance Guruji</span>
-=======
             <span className="ml-2 font-bold text-white text-xl">
               Finance Guruji
             </span>
->>>>>>> aba7956ed85898733a31c61692864c3b25707ca3
-          </div>
+          </div >
 
           {/* Links */}
-          <div className="hidden md:flex space-x-8">
+          < div className="hidden md:flex space-x-8" >
             <Link to="/" className="text-white hover:text-blue-300 font-medium">
               Home
             </Link>
@@ -62,46 +54,43 @@ export default function Navbar() {
             >
               About
             </Link>
-            <Link
-              to="/services"
-              className="text-white hover:text-blue-300 font-medium"
-            >
-              Services
-            </Link>
+
             <Link
               to="/contact"
               className="text-white hover:text-blue-300 font-medium"
             >
               Contact
             </Link>
-          </div>
+          </div >
 
           {/* Login/Register */}
-          {isLoggedIn ?
-            <Link
-              to="/userform"
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-            >
-              Fill up form for better answers
-            </Link>
-            :
-            (
-              <div className="flex items-center space-x-4 border-10%">
-                <Link
-                  to="/login"
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="px-4 py-2 border border-blue-700 text-blue-700 rounded hover:bg-blue-50 transition"
-                >
-                  Register
-                </Link>
-              </div>
-            )}
-        </div>
+          {
+            isLoggedIn ?
+              <Link
+                to="/userform"
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+              >
+                Fill up form for better answers
+              </Link>
+              :
+              (
+                <div className="flex items-center space-x-4 border-10%">
+                  <Link
+                    to="/login"
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="px-4 py-2 border border-blue-700 text-blue-700 rounded hover:bg-blue-50 transition"
+                  >
+                    Register
+                  </Link>
+                </div>
+              )
+          }
+        </div >
       </div >
     </nav >
   );

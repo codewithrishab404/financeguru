@@ -37,7 +37,7 @@ const AIChat: React.FC = () => {
 
     async function getUserData() {
       try {
-        const res = await fetch("http//localhost:5000/user-data", {
+        const res = await fetch("http://localhost:5000/user-data", {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
@@ -114,9 +114,6 @@ const AIChat: React.FC = () => {
             {/* Options & Ask Button */}
             <div className="flex justify-between items-center">
               <div className="flex gap-3">
-                <button className="bg-white/20 text-white px-4 py-2 rounded-xl hover:bg-white/30 transition">
-                  More Options
-                </button>
                 {pdfDoc && (
                   <span className="text-white/70 px-2 py-1 rounded-lg bg-white/10 text-sm">
                     PDF Selected
