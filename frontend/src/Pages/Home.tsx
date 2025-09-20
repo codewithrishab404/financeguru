@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mirage } from "ldrs/react";
 import "ldrs/react/Mirage.css";
 import CountUp from "react-countup";
+import AIChat from "./AIChat"; // <-- import your chatbot
 
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
@@ -121,7 +122,6 @@ export default function Home() {
           {/* Info Boxes Below Text */}
           {!showChat && (
             <div className="absolute top-[550px] left-6 flex gap-6 z-10">
-              {/* Users Box */}
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -148,7 +148,6 @@ export default function Home() {
                 />
               </motion.div>
 
-              {/* Rating Box */}
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -222,6 +221,11 @@ export default function Home() {
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+
+          {/* Sticky Floating AI Chatbot */}
+          <div className="fixed bottom-6 right-6 z-50">
+            <AIChat />
           </div>
         </>
       )}

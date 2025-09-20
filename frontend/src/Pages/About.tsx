@@ -79,7 +79,7 @@ export default function About() {
             Meet Our Team
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {["Rishab", "Shruti", "Charu"].map((name, idx) => (
+            {["Rishab", "Aritra", "Bhargav", "Arpan"].map((name, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
