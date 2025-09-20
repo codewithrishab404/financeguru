@@ -1,7 +1,10 @@
-<<<<<<< HEAD
+@import "tailwindcss";
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   /* Default dark theme body bg and text set in App.tsx via Tailwind */
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
@@ -12,7 +15,7 @@ body {
 }
 
 .chat-container::-webkit-scrollbar-thumb {
-  background-color: #4A4A4A;
+  background-color: #4a4a4a;
   border-radius: 3px;
 }
 
@@ -20,14 +23,13 @@ body {
   background-color: #282828;
 }
 
-
 /* Basic styling for rendered markdown - Dark Theme */
 .prose h1 {
   font-size: 1.5em;
   font-weight: bold;
   margin-top: 0.8em;
   margin-bottom: 0.4em;
-  color: #E2E2E2;
+  color: #e2e2e2;
 }
 
 .prose h2 {
@@ -35,7 +37,7 @@ body {
   font-weight: bold;
   margin-top: 0.7em;
   margin-bottom: 0.35em;
-  color: #E2E2E2;
+  color: #e2e2e2;
 }
 
 .prose h3 {
@@ -43,42 +45,42 @@ body {
   font-weight: bold;
   margin-top: 0.6em;
   margin-bottom: 0.3em;
-  color: #E2E2E2;
+  color: #e2e2e2;
 }
 
 .prose p {
   margin-bottom: 0.4em;
   line-height: 1.5;
-  color: #E2E2E2;
+  color: #e2e2e2;
 }
 
 .prose ul,
 .prose ol {
   margin-left: 1.25em;
   margin-bottom: 0.4em;
-  color: #E2E2E2;
+  color: #e2e2e2;
 }
 
 .prose li {
   margin-bottom: 0.2em;
-  color: #E2E2E2;
+  color: #e2e2e2;
 }
 
 .prose strong {
   font-weight: bold;
-  color: #E2E2E2;
+  color: #e2e2e2;
 }
 
 .prose em {
   font-style: italic;
-  color: #E2E2E2;
+  color: #e2e2e2;
 }
 
 .prose code {
   /* background-color and color managed by highlight.js theme */
   padding: 0.2em 0.4em;
   border-radius: 3px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.9em;
 }
 
@@ -98,17 +100,14 @@ body {
 }
 
 .prose blockquote {
-  border-left: 3px solid #4A4A4A;
+  border-left: 3px solid #4a4a4a;
   margin-left: 0;
   padding-left: 1em;
-  color: #A8ABB4;
+  color: #a8abb4;
   margin-bottom: 0.5em;
 }
 
 .prose a {
-  color: #79B8FF;
+  color: #79b8ff;
   text-decoration: underline;
 }
-=======
-@import "tailwindcss";
->>>>>>> b05ca118a0321e03392198513c104bb56e13ca34
