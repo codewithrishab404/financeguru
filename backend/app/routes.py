@@ -1,23 +1,49 @@
 from flask import Blueprint, request, jsonify
-from .services import firebase_service
+from .services import firebase_service, auth_service
+from .services.auth_service import login_required
 
 main = Blueprint("main", __name__)
 
-@main.route("/profile", methods=["POST"])
-def save_profile():
+@main.route("/", methods=["GET"])
+def test():
+    return jsonify({"message": "The server is up and running!"})
+
+@main.route("/register", methods=["POST"])
+def register():
     data = request.json
-    firebase_service.save_user_profile(data)
-    return jsonify({"message": "Profile saved successfully"})
+    email = data.get("email")
+    password = data.get("password")
 
-# @main.route("/upload_csv", methods=["POST"])
-# def upload_csv():
-#     file = request.files["file"]
-#     summary = csv_service.process_csv(file)
-#     return jsonify({"summary": summary})
+    result = auth_service.create_user(email, password)
+    return jsonify(result)
 
-# @main.route("/chat", methods=["POST"])
-# def chat():
-#     user_input = request.json.get("message")
-#     user_id = request.json.get("user_id")
-#     response = ai_service.generate_response(user_input, user_id)
-#     return jsonify({"reply": response})
+# To test token verification
+@main.route("/protected", methods=["GET"])
+@login_required
+def protected():
+    user = request.user
+    print(user)
+    return jsonify({"message": "Access granted", "user": user})
+
+# handle user data in database
+@main.route("/user-data", methods=["POST", "GET", "PUT"])
+@login_required
+def user_data():
+    user = request.user
+    user_id = user.get("uid")
+
+    if request.method == "POST":
+        data = request.json
+        firebase_service.save_user_profile(user, data, overwrite=True)
+        return jsonify({"message": "Profile saved successfully"})
+
+    elif request.method == "GET":
+        profile = firebase_service.get_user_profile(user_id)
+        if profile:
+            return jsonify(profile)
+        return jsonify({"error": "No profile found"}), 404
+
+    elif request.method == "PUT":
+        data = request.json
+        firebase_service.save_user_profile(user, data, overwrite=False)
+        return jsonify({"message": "Profile updated successfully"})
