@@ -5,26 +5,56 @@ import Background from "../Component/Background";
 import Navbar from "../Component/NavBar";
 
 const AIChat: React.FC = () => {
-  const [pdfDoc, setPdfDoc] = useState<File | null>(null); // Change type to File | null
+  const [pdfDoc, setPdfDoc] = useState<any | null>(null);
   const [userData, setUserData] = useState<Record<string, any>>({});
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState<string | undefined>("");
   const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
 
-  // Fetch user data
   useEffect(() => {
-    fetch("http://localhost:5000/user-data", {
-      method: "GET",
-      headers: {
-        Authorization:
-          "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUwMDZlMjc5MTVhMTcwYWIyNmIxZWUzYjgxZDExNjU0MmYxMjRmMjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZmluYW5jZWd1cnUtM2M0NjIiLCJhdWQiOiJmaW5hbmNlZ3VydS0zYzQ2MiIsImF1dGhfdGltZSI6MTc1ODM2MjYxMywidXNlcl9pZCI6ImlLcmRZTGRzclpnMW5veXpnME5WSTIwelZuejEiLCJzdWIiOiJpS3JkWUxkc3JaZzFub3l6ZzBOVkkyMHpWbnoxIiwiaWF0IjoxNzU4MzYyNjEzLCJleHAiOjE3NTgzNjYyMTMsImVtYWlsIjoiYXJwYW5AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImFycGFuQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.TN2DC2d7oPSV30gIG5ZVVcKb0okf9YnrZ547vxS17BJhvii0Y7CDGLwlCrY5ZO6mhHasFvAJLGJoKqSzfhBxpz_6fmqMHJU42B7q9Q_RDFMHIwVOMi3QGyh39EfxxeQH3mJVRWIY-Ez1cKaHV9JSHROpQt9Gav22rQ6LvTK7OyNXODSn5nyOLBADG-yZOq9_FPDhLBPMNp9u9zDA7IqH8qPtmYwjOV0oBYf1-Do6_RPHpIrFxRZAEu4amRuXirFq-C5Q8bndNGBovLne9CoU95mdRFAxZX-98J06iRUtEeEQ",
-      },
-      redirect: "follow",
-    })
-      .then((res) => res.json())
-      .then((data) => setUserData(data))
-      .catch((err) => console.error("Failed to load user data", err));
-  }, []);
+    const token = localStorage.getItem("idToken");
+
+    async function verifyToken() {
+      if (token) {
+        const response = await fetch('http://localhost:5000/protected', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+          },
+        });
+        const data = await response.json();
+        if (data.valid) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } else {
+        setIsLoggedIn(false);
+      }
+    }
+
+    async function getUserData() {
+      try {
+        const res = await fetch("http://localhost:5000/user-data", {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`
+          },
+          redirect: "follow"
+        });
+        const data = await res.json();
+        setUserData(data);
+      } catch (err) {
+        console.log("Failed to get user data");
+      }
+    }
+
+    verifyToken();
+    getUserData();
+  }, [])
 
   // Handle PDF upload
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,9 +114,6 @@ const AIChat: React.FC = () => {
             {/* Options & Ask Button */}
             <div className="flex justify-between items-center">
               <div className="flex gap-3">
-                <button className="bg-white/20 text-white px-4 py-2 rounded-xl hover:bg-white/30 transition">
-                  More Options
-                </button>
                 {pdfDoc && (
                   <span className="text-white/70 px-2 py-1 rounded-lg bg-white/10 text-sm">
                     PDF Selected

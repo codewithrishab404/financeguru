@@ -1,15 +1,30 @@
 import React, { useState } from "react";
 import Background from "../Component/Background";
 import { motion } from "framer-motion";
+import LoginUser from "../services/firebaseService";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Email:", email, "Password:", password);
-    // Add your authentication logic here
+    try {
+      console.log("Logging in user...");
+      const token = await LoginUser(email, password);
+      console.log("Login successful, token:", token);
+      if (token) {
+        localStorage.setItem("idToken", token);
+        alert("Login successful");
+        navigate("/");
+      }
+    } catch (err) {
+      console.log("Login error ", err);
+      alert("Login failed: Please try again!");
+    }
   };
 
   return (

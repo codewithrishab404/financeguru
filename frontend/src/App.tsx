@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import LoginPage from "./Pages/LoginPage"; // create this component
+import LoginPage from "./Pages/LoginPage";
 import Home from "./Pages/Home";
 import RegisterPage from "./Pages/RegisterPage";
 import UserForm from "./Pages/UserForm";
