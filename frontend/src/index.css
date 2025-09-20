@@ -1,4 +1,6 @@
-<<<<<<< HEAD
+@import "tailwindcss";
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -109,6 +111,3 @@ body {
   color: #79B8FF;
   text-decoration: underline;
 }
-=======
-@import "tailwindcss";
->>>>>>> b05ca118a0321e03392198513c104bb56e13ca34
